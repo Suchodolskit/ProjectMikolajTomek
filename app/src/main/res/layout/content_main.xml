@@ -1,20 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    android:orientation="vertical">
 
-    <TextView
+    <EditText
+        android:id="@+id/logInText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="login"
+        tools:layout_editor_absoluteX="99dp"
+        tools:layout_editor_absoluteY="48dp" />
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/passwordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        tools:layout_editor_absoluteX="99dp"
+        tools:layout_editor_absoluteY="144dp"
+        android:hint="password"/>
+
+    <Button
+        android:id="@+id/submitSingInButton"
+        android:layout_width="214dp"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:onClick="SingIn"/>
+    <Button
+        android:id="@+id/signOutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sing Out"
+        android:onClick="signOut"/>
+    <Button
+        android:id="@+id/signUpButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sing Up"
+        android:onClick="signUp"/>
+</LinearLayout>
