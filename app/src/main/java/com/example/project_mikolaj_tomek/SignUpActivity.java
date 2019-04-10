@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -33,7 +32,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser() != null)
-                    startActivity(new Intent(SignUpActivity.this, SelectItemsActivity.class));
+                    startActivity(new Intent(SignUpActivity.this, MainActivity.class));
             }
         };
         authHelper = new FirebaseAuthHelper(mAuth,mAuthListener,this);
