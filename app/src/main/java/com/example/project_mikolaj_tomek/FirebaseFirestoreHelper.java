@@ -5,8 +5,10 @@ import android.util.Log;
 
 import com.example.project_mikolaj_tomek.Models.FirestoreObject;
 import com.example.project_mikolaj_tomek.Models.Product;
+import com.example.project_mikolaj_tomek.Models.UserObject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
@@ -58,5 +60,10 @@ public class FirebaseFirestoreHelper {
         return Objects;
     }
 
-    //public void AddUser(String pid)
+    public UserObject AddUser(FirebaseUser user, String firstName, String lastName)
+    {
+        UserObject userObject = new UserObject(user.getUid(),firstName,lastName);
+        SaveData("Users",userObject);
+        return userObject;
+    }
 }

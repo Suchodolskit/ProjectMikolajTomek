@@ -37,15 +37,6 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void SignUp(View view) {
-        boolean sigedUp = authHelper.SignUpWithEmail(mNewEmailText.getText().toString(),mPasswordText.getText().toString());
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        if(sigedUp)
-        {
-            FirebaseUser fuser = authHelper.GetUser();
-        }
+        authHelper.SignUpWithEmail(mNewEmailText.getText().toString(),mPasswordText.getText().toString());
     }
 }
