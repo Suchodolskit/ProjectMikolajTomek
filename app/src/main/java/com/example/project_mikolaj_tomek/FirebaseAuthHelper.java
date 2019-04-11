@@ -1,5 +1,6 @@
 package com.example.project_mikolaj_tomek;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,9 +18,18 @@ public class FirebaseAuthHelper {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private AppCompatActivity activity;
 
-    public FirebaseAuthHelper(FirebaseAuth mAuth, FirebaseAuth.AuthStateListener mAuthListener, AppCompatActivity activity) {
-        this.mAuth = mAuth;
-        this.mAuthListener = mAuthListener;
+    //public FirebaseAuthHelper(FirebaseAuth mAuth, FirebaseAuth.AuthStateListener mAuthListener, final AppCompatActivity activity) {
+    public FirebaseAuthHelper(final AppCompatActivity activity) {
+        this.mAuth = FirebaseAuth.getInstance();
+        this.mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() != null)
+                    activity.startActivity(new Intent(activity, MainActivity.class));
+            }
+        };
+        //this.mAuth = mAuth;
+        //this.mAuthListener = mAuthListener;
         this.activity = activity;
     }
 
@@ -65,5 +75,10 @@ public class FirebaseAuthHelper {
 
     public void SignOut() {
         mAuth.signOut();
+    }
+
+    public FirebaseUser GetUser()
+    {
+        return mAuth.getCurrentUser();
     }
 }

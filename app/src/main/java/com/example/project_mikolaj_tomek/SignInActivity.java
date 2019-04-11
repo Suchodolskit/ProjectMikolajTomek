@@ -15,13 +15,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SignInActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "SignInActivity";
 
     private EditText mEmailText;
     private EditText mPasswordText;
 
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuthHelper authHelper;
 
 
@@ -32,42 +30,16 @@ public class SignInActivity extends AppCompatActivity {
 
         mEmailText = findViewById(R.id.emailText);
         mPasswordText = findViewById(R.id.passwordText);
-
-        mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() != null) {
-                    Toast.makeText(SignInActivity.this,"Successfully signed in. ",Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(SignInActivity.this, MainActivity.class));
-                }
-            }
-        };
-        authHelper = new FirebaseAuthHelper(mAuth,mAuthListener,this);
+        authHelper = new FirebaseAuthHelper(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
     }
 
-    private void startLogIn() {
-        String login = mEmailText.getText().toString();
-        String password = mPasswordText.getText().toString();
-
-        mAuth.signInWithEmailAndPassword(login,password).addOnCompleteListener(
-                new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(!task.isSuccessful()){
-                            Toast.makeText(SignInActivity.this,"You cannot sign in with this email and password",Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-    }
     public void SingIn(View view) {
-        authHelper.SignInWithEmail(mEmailText.getText().toString(),mPasswordText.getText().toString());
+        authHelper.SignInWithEmail(mEmailText.getText().toString(), mPasswordText.getText().toString());
     }
 
     public void SignUp(View view) {

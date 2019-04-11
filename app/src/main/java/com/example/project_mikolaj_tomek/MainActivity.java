@@ -16,9 +16,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.project_mikolaj_tomek.Models.Product;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -26,6 +32,7 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuthHelper authHelper;
+    List<Object> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,27 +59,22 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() == null) {
-                    Toast.makeText(MainActivity.this,"Signed off",Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(MainActivity.this, SignInActivity.class));
-                }
-            }
-        };
-        authHelper = new FirebaseAuthHelper(mAuth,mAuthListener,this);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("FoodProducts");
+        authHelper = new FirebaseAuthHelper(this);
 
-        //myRef.setValue("Hello, World!");
+        FirebaseFirestoreHelper firebaseFirestoreHelper = new FirebaseFirestoreHelper();
+        firebaseFirestoreHelper.SaveData("FoodProduct",new Product("potato","Potatos",null));
+
+        list = firebaseFirestoreHelper.GetCollection("FoodProduct");
+        FirebaseUser user = authHelper.GetUser();
+        if(user == null)
+        {
+            startActivity(new Intent(this,SignInActivity.class));
+        }
 
     }
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override

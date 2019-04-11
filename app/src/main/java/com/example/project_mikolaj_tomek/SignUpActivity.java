@@ -7,16 +7,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.project_mikolaj_tomek.Models.UserObject;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText mNewEmailText;
     private EditText mPasswordText;
 
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuthHelper authHelper;
+    private FirebaseFirestoreHelper databaseHesper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,23 +28,24 @@ public class SignUpActivity extends AppCompatActivity {
         mNewEmailText = findViewById(R.id.newEmailText);
         mPasswordText = findViewById(R.id.newPasswordText);
 
-        mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() != null)
-                    startActivity(new Intent(SignUpActivity.this, MainActivity.class));
-            }
-        };
-        authHelper = new FirebaseAuthHelper(mAuth,mAuthListener,this);
+        authHelper = new FirebaseAuthHelper(this);
+        databaseHesper = new FirebaseFirestoreHelper();
     }
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
     }
 
     public void SignUp(View view) {
-        authHelper.SignUpWithEmail(mNewEmailText.getText().toString(),mPasswordText.getText().toString());
+        boolean sigedUp = authHelper.SignUpWithEmail(mNewEmailText.getText().toString(),mPasswordText.getText().toString());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if(sigedUp)
+        {
+            FirebaseUser fuser = authHelper.GetUser();
+        }
     }
 }
