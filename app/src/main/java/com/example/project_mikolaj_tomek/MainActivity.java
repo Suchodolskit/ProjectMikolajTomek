@@ -50,17 +50,17 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() == null) {
-                    //Toast.makeText(MainActivity.this,"Signed off",Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(MainActivity.this, SignInActivity.class));
-                }
-            }
-        };
-        authHelper = new FirebaseAuthHelper(mAuth,mAuthListener,this);
+        authHelper = new FirebaseAuthHelper(this);
+
+        FirebaseFirestoreHelper firebaseFirestoreHelper = new FirebaseFirestoreHelper();
+        firebaseFirestoreHelper.FoodProductsInitialise();
+
+        list = firebaseFirestoreHelper.GetCollection("FoodProduct");
+        FirebaseUser user = authHelper.GetUser();
+        if(user == null)
+        {
+            startActivity(new Intent(this,SignInActivity.class));
+        }
 
     }
     @Override

@@ -1,9 +1,11 @@
 package com.example.project_mikolaj_tomek;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.example.project_mikolaj_tomek.Models.UserObject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -17,9 +19,15 @@ public class FirebaseAuthHelper {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private AppCompatActivity activity;
 
-    public FirebaseAuthHelper(FirebaseAuth mAuth, FirebaseAuth.AuthStateListener mAuthListener, AppCompatActivity activity) {
-        this.mAuth = mAuth;
-        this.mAuthListener = mAuthListener;
+    public FirebaseAuthHelper(final AppCompatActivity activity) {
+        this.mAuth = FirebaseAuth.getInstance();
+        this.mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() != null)
+                    activity.startActivity(new Intent(activity, MainActivity.class));
+            }
+        };
         this.activity = activity;
     }
 
@@ -41,29 +49,37 @@ public class FirebaseAuthHelper {
         return returnSignInWithEmailResult;
     }
 
-    private boolean returnSingUpWithEmailResult;
-    public boolean SignUpWithEmail(String email, String password){
+    private UserObject returnUser;
+    public UserObject SignUpWithEmail(String email, String password){
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Log.w(TAG, "creation successful");
-                            returnSingUpWithEmailResult = true;
+                            FirebaseFirestoreHelper helper = new FirebaseFirestoreHelper();
+                            returnUser = helper.AddUser(user,null,null);
+
+
 
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            returnSingUpWithEmailResult = false;
+                            returnUser = null;
                         }
                     }
 
                     // ...
                 });
-        return returnSingUpWithEmailResult;
+        return returnUser;
     }
 
     public void SignOut() {
         mAuth.signOut();
+    }
+
+    public FirebaseUser GetUser()
+    {
+        return mAuth.getCurrentUser();
     }
 }
