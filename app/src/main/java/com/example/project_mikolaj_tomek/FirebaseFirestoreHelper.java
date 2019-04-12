@@ -60,10 +60,8 @@ public class FirebaseFirestoreHelper {
         return Objects;
     }
 
-    public UserObject AddUser(FirebaseUser user, String firstName, String lastName) {
-        UserObject userObject = new UserObject(user.getUid(),firstName,lastName);
-        SaveData("Users",userObject);
-        return userObject;
+    public void  AddUser(UserObject user) {
+        SaveData("Users",user);
     }
 
     public void FoodProductsInitialise() {

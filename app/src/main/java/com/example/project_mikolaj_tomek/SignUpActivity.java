@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseUser;
+
 public class SignUpActivity extends AppCompatActivity {
 
     private TextInputLayout mFirstNameInput;
@@ -93,6 +95,10 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+        mPhoneNumberInput = findViewById(R.id.phone_number_input);
+        mPhoneNumberText = findViewById(R.id.new_user_phone_number);
+
+
         authHelper = new FirebaseAuthHelper(this);
         databaseHesper = new FirebaseFirestoreHelper();
     }
@@ -107,8 +113,11 @@ public class SignUpActivity extends AppCompatActivity {
                 Validator.ValidateEmail(mEmailText.getText().toString(), mEmailInput) &&
                 Validator.ValidatePassword(mPasswordText.getText().toString(), mPasswordInput) &&
                 Validator.ValidateRepeatedPassword(mPasswordText.getText().toString(),
-                mRepeatPasswordText.getText().toString(), mRepeatPasswordInput)
-        )
-        authHelper.SignUpWithEmail(mEmailText.getText().toString(),mPasswordText.getText().toString());
+                mRepeatPasswordText.getText().toString(), mRepeatPasswordInput))
+        {
+            authHelper.SignUpWithEmail(mEmailText.getText().toString(), mPasswordText.getText().toString(),
+                    mFirstNameText.getText().toString(), mLastNameText.getText().toString(),
+                    mPhoneNumberText.getText().toString());
+        }
     }
 }

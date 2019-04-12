@@ -4,8 +4,8 @@ import android.support.design.widget.TextInputLayout;
 import android.util.Patterns;
 
 public class Validator{
-    public static boolean ValidatePassword(String password, TextInputLayout textInputLayout)
-    {
+    
+    public static boolean ValidatePassword(String password, TextInputLayout textInputLayout) {
         if(password == null || password.equals("")) {
             textInputLayout.setError("Password field can't be empty.");
             return false;
@@ -13,8 +13,8 @@ public class Validator{
         textInputLayout.setError(null);
         return true;
     }
-    public static boolean ValidateEmail(String email, TextInputLayout textInputLayout)
-    {
+
+    public static boolean ValidateEmail(String email, TextInputLayout textInputLayout) {
         if(email == null || email.equals("")) {
             textInputLayout.setError("Email field can't be empty.");
             return false;
@@ -26,8 +26,8 @@ public class Validator{
         textInputLayout.setError(null);
         return true;
     }
-    public static boolean ValidateName(String name, TextInputLayout textInputLayout)
-    {
+
+    public static boolean ValidateName(String name, TextInputLayout textInputLayout) {
         if(name == null || name.equals(""))
         {
             textInputLayout.setError("Name field can't be empty.");
@@ -40,8 +40,8 @@ public class Validator{
         textInputLayout.setError(null);
         return true;
     }
-    public static boolean ValidateRepeatedPassword(String password, String repeatedPassword, TextInputLayout textInputLayout)
-    {
+
+    public static boolean ValidateRepeatedPassword(String password, String repeatedPassword, TextInputLayout textInputLayout) {
         if(repeatedPassword == null || repeatedPassword.equals("")) {
             textInputLayout.setError("Repeat password field can't be empty.");
             return false;

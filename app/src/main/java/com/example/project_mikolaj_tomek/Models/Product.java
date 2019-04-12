@@ -23,8 +23,24 @@ public class Product extends FirestoreObject {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<String> getBarCodes() {
+        return BarCodes;
+    }
+
+    public void setBarCodes(List<String> barCodes) {
+        BarCodes = barCodes;
+    }
+
     public Image getIcon() {
         return icon;
+    }
+
+    public void setIcon(Image icon) {
+        this.icon = icon;
     }
 
     public boolean addBarcode(String code)

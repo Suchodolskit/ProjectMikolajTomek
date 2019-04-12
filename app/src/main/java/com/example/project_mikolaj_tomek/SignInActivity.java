@@ -20,8 +20,6 @@ public class SignInActivity extends AppCompatActivity {
     private TextInputLayout mEmailInput;
     private TextInputLayout mPasswordInput;
 
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuthHelper authHelper;
 
 
@@ -65,10 +63,13 @@ public class SignInActivity extends AppCompatActivity {
         });
 
         authHelper = new FirebaseAuthHelper(this);
+
+        if(authHelper.GetUser()!=null) finish();
     }
     @Override
     protected void onStart() {
         super.onStart();
+        if(authHelper.GetUser()!=null) finish();
     }
 
     public void SingIn(View view) {
@@ -80,5 +81,6 @@ public class SignInActivity extends AppCompatActivity {
     public void SignUp(View view) {
         startActivity(new Intent(this, SignUpActivity.class));
     }
+
 }
 

@@ -50,7 +50,7 @@ public class FirebaseAuthHelper {
     }
 
     private UserObject returnUser;
-    public UserObject SignUpWithEmail(String email, String password){
+    public UserObject SignUpWithEmail(final String email, String password, final String firsName, final String lastName, final String phoneNumber){
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -58,18 +58,17 @@ public class FirebaseAuthHelper {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Log.w(TAG, "creation successful");
                             FirebaseFirestoreHelper helper = new FirebaseFirestoreHelper();
-                            returnUser = helper.AddUser(user,null,null);
-
-
+                            returnUser = new UserObject(user.getUid(),firsName,lastName,phoneNumber,email,null);
+                            helper.AddUser(returnUser);
+                            activity.finish();
 
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             returnUser = null;
+                            //TODO: handle message from firebase and inform user
                         }
                     }
-
-                    // ...
                 });
         return returnUser;
     }
