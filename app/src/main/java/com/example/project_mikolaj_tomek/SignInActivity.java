@@ -3,7 +3,6 @@ package com.example.project_mikolaj_tomek;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -40,20 +39,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus)
-                    ValidatePassword(mPasswordText.getText().toString());
-            }
-        });
-        mEmailInput.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    if (event.getAction() == KeyEvent.ACTION_UP) {
-                        mPasswordText.clearFocus();
-                        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                    }
-                }
-                return false;
+                    Validator.ValidateEmail(mEmailText.getText().toString(), mEmailInput);
             }
         });
 
@@ -61,10 +47,10 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus)
-                    ValidatePassword(mPasswordText.getText().toString());
+                    Validator.ValidatePassword(mPasswordText.getText().toString(), mPasswordInput);
             }
         });
-        mPasswordInput.setOnKeyListener(new View.OnKeyListener() {
+        mPasswordText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
@@ -79,30 +65,15 @@ public class SignInActivity extends AppCompatActivity {
         });
 
         authHelper = new FirebaseAuthHelper(this);
-//        mAuth = FirebaseAuth.getInstance();
-//        mAuthListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                if(firebaseAuth.getCurrentUser() != null) {
-//                    //Toast.makeText(SignInActivity.this,"Successfully signed in. ",Toast.LENGTH_LONG).show();
-//                    startActivity(new Intent(SignInActivity.this, MainActivity.class));
-//                }
-//            }
-//        };
-//        authHelper = new FirebaseAuthHelper(this);
     }
-    private boolean ValidatePassword(String password)
-    {
-        return true;
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
-        //mAuth.addAuthStateListener(mAuthListener);
     }
 
     public void SingIn(View view) {
+        if(Validator.ValidatePassword(mPasswordText.getText().toString(), mPasswordInput) &&
+                Validator.ValidateEmail(mEmailText.getText().toString(), mEmailInput))
         authHelper.SignInWithEmail(mEmailText.getText().toString(), mPasswordText.getText().toString());
     }
 

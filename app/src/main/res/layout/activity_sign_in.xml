@@ -27,9 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/fui_email_hint"
-            android:inputType="textEmailAddress"
-            android:textColor="@color/secondaryColor"
-            android:textColorLink="@color/primaryTextColor" />
+            android:inputType="textEmailAddress" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
