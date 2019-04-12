@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser() == null) {
-                    Toast.makeText(MainActivity.this,"Signed off",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(MainActivity.this,"Signed off",Toast.LENGTH_LONG).show();
                     startActivity(new Intent(MainActivity.this, SignInActivity.class));
                 }
             }
