@@ -2,7 +2,6 @@ package com.example.project_mikolaj_tomek;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -14,15 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.example.project_mikolaj_tomek.Models.Product;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -62,7 +55,7 @@ public class MainActivity extends AppCompatActivity
         authHelper = new FirebaseAuthHelper(this);
 
         FirebaseFirestoreHelper firebaseFirestoreHelper = new FirebaseFirestoreHelper();
-        firebaseFirestoreHelper.SaveData("FoodProduct",new Product("potato","Potatos",null));
+        firebaseFirestoreHelper.FoodProductsInitialise();
 
         list = firebaseFirestoreHelper.GetCollection("FoodProduct");
         FirebaseUser user = authHelper.GetUser();
