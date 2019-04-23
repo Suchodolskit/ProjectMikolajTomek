@@ -1,9 +1,8 @@
 package com.example.project_mikolaj_tomek.Models;
 
+import android.graphics.Bitmap;
 import android.media.Image;
-import android.text.format.DateFormat;
 
-import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 
@@ -11,21 +10,23 @@ public class Recipe extends FirestoreObject {
 
     private String title;
     private Date creationDate;
-    private Integer preperationTime;
+    private Integer preparationTime;
     private String summary;
     private String description;
     private List<Product> products;
-    private Image image;
+    private Bitmap image;
+    private String author;
 
-    public Recipe(String id, String title, Date creationDate, Integer preperationTime, String summary, String description, List<Product> products, Image image) {
+    public Recipe(String id, String title, Date creationDate, Integer preparationTime, String summary, String description, List<Product> products, Bitmap image, String author) {
         super(id);
         this.title = title;
         this.creationDate = creationDate;
-        this.preperationTime = preperationTime;
+        this.preparationTime = preparationTime;
         this.summary = summary;
         this.description = description;
         this.products = products;
         this.image = image;
+        this.author = author;
     }
 
     public String getTitle() {
@@ -44,12 +45,12 @@ public class Recipe extends FirestoreObject {
         this.creationDate = creationDate;
     }
 
-    public Integer getPreperationTime() {
-        return preperationTime;
+    public Integer getPreparationTime() {
+        return preparationTime;
     }
 
-    public void setPreperationTime(Integer preperationTime) {
-        this.preperationTime = preperationTime;
+    public void setPreparationTime(Integer preparationTime) {
+        this.preparationTime = preparationTime;
     }
 
     public String getSummary() {
@@ -76,11 +77,12 @@ public class Recipe extends FirestoreObject {
         this.products = products;
     }
 
-    public Image getImage() {
-        return image;
+
+    public String getAuthor() {
+        return author;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

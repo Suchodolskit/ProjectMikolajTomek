@@ -135,4 +135,8 @@ public class MainActivity extends AppCompatActivity
         startActivity(new Intent(this, SignInActivity.class));
     }
 
+    public void AddRecipe(View view) {
+        Intent intent = new Intent(this, AddRecipeActivity.class);
+        startActivity(intent);
+    }
 }
