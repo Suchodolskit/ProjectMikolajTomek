@@ -16,11 +16,11 @@ import java.util.List;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>
 {
     private Context context;
-    private List<Recipe> recipies;
+    private List<Recipe> recipeList;
 
-    public RecipeAdapter(Context context, List<Recipe> recipies) {
+    public RecipeAdapter(Context context, List<Recipe> recipeList) {
         this.context = context;
-        this.recipies = recipies;
+        this.recipeList = recipeList;
     }
 
     @NonNull
@@ -33,15 +33,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder recipeViewHolder, int i) {
-        Recipe recipe = recipies.get(i);
+
+        Recipe recipe = recipeList.get(i);
         recipeViewHolder.title.setText(recipe.getTitle());
         recipeViewHolder.summary.setText(recipe.getSummary());
-        recipeViewHolder.image.setImageDrawable(recipe.getImage());
+        //recipeViewHolder.image.setImageDrawable(new BitmapDrawable(Resources.getSystem(), recipe.getterDoBitmapyInaczejNazwany()));
     }
 
     @Override
     public int getItemCount() {
-        return recipies.size();
+        return recipeList.size();
     }
 
     class RecipeViewHolder extends RecyclerView.ViewHolder

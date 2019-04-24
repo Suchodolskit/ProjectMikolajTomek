@@ -1,7 +1,6 @@
 package com.example.project_mikolaj_tomek;
 
 import android.graphics.Bitmap;
-
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 

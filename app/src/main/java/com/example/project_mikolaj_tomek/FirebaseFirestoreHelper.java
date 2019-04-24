@@ -91,11 +91,11 @@ public class FirebaseFirestoreHelper {
         productNames.add("pear");        productNames.add("broad beans");productNames.add("spinach");
         productNames.add("pineapple");   productNames.add("broccoli");   productNames.add("spring onion");
 
-        for(int i=0;i<productNames.size();i++)
-        {
-            Product p = new Product(String.valueOf(i),productNames.get(i),null);
-            SaveData("FoodProducts",p);
-        }
+//        for(int i=0;i<productNames.size();i++)
+//        {
+//            Product p = new Product(String.valueOf(i),productNames.get(i),null);
+//            SaveData("FoodProducts",p);
+//        }
 
         CollectionReference cr = store.collection("FoodProducts");
         Query test = cr.whereGreaterThanOrEqualTo("name","peach");

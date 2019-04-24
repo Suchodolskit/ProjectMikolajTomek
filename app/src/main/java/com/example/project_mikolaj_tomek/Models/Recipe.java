@@ -1,7 +1,6 @@
 package com.example.project_mikolaj_tomek.Models;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.media.Image;
 
 import java.util.Date;
@@ -15,10 +14,10 @@ public class Recipe extends FirestoreObject {
     private String summary;
     private String description;
     private List<Product> products;
-    private Drawable image;
+    private Bitmap image;
     private String author;
 
-    public Recipe(String id, String title, Date creationDate, Integer preparationTime, String summary, String description, List<Product> products, Drawable image, String author) {
+    public Recipe(String id, String title, Date creationDate, Integer preparationTime, String summary, String description, List<Product> products, Bitmap image, String author) {
         super(id);
         this.title = title;
         this.creationDate = creationDate;
@@ -28,9 +27,6 @@ public class Recipe extends FirestoreObject {
         this.products = products;
         this.image = image;
         this.author = author;
-    }
-    public Drawable getImage() {
-        return image;
     }
 
     public String getTitle() {
