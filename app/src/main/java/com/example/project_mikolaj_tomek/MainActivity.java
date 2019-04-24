@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuthHelper authHelper;
     private List list;
+    private List<Recipe> recipes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +61,10 @@ public class MainActivity extends AppCompatActivity
 
         FirebaseFirestoreHelper firebaseFirestoreHelper = new FirebaseFirestoreHelper();
         firebaseFirestoreHelper.FoodProductsInitialise();
-
         list = firebaseFirestoreHelper.GetCollection("FoodProduct");
+
+
+
         FirebaseUser user = authHelper.GetUser();
         if(user == null)
         {
@@ -69,11 +72,6 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -70,7 +70,7 @@ public class FirebaseFirestoreHelper {
         productNames.add("salami");      productNames.add("pomegranate");productNames.add("carrot");
         productNames.add("sausage");     productNames.add("raspberry");  productNames.add("cauliflower");
         productNames.add("apple");       productNames.add("onion");      productNames.add("celery");
-        productNames.add("apricot");     productNames.add("redcurrant"); productNames.add("chilli pepper");
+        productNames.add("apricot");     productNames.add("redcurrant"); productNames.add("chili pepper");
         productNames.add("banana");      productNames.add("rhubarb");    productNames.add("courgette");
         productNames.add("blackberry");  productNames.add("strawberry"); productNames.add("cucumber");
         productNames.add("blackcurrant");productNames.add("anchovy");    productNames.add("garlic");
