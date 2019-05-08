@@ -1,10 +1,12 @@
 package com.example.project_mikolaj_tomek;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.project_mikolaj_tomek.Models.FirestoreObject;
 import com.example.project_mikolaj_tomek.Models.Product;
+import com.example.project_mikolaj_tomek.Models.Recipe;
 import com.example.project_mikolaj_tomek.Models.UserObject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,6 +21,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,11 +32,13 @@ public class FirebaseFirestoreHelper {
     private DatabaseReference databaseReference;
     private FirebaseDatabase database;
     private FirebaseFirestore store;
+    private Context context;
 
-    public FirebaseFirestoreHelper() {
+    public FirebaseFirestoreHelper(Context context) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
         store = FirebaseFirestore.getInstance();
+        this.context = context;
     }
 
     public void SaveData(String collection, FirestoreObject object) {
@@ -59,6 +64,64 @@ public class FirebaseFirestoreHelper {
                 });
         return Objects;
     }
+
+    public void GetRecipes(final RecipeAdapter adapter) {
+        final LinkedList<Recipe> list = new LinkedList<>();
+        store.collection("recipes")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Recipe recipe = new Recipe(
+                                        document.getString("id"),
+                                        document.getString("title"),
+                                        document.getDate("creationDate"),
+                                        document.getLong("preparationTime"),
+                                        document.getString("summary"),
+                                        document.getString("description"),
+                                        null,
+                                        null,
+                                        document.getString("author")
+                                );
+                                FirebaseStorageHelper helper = new FirebaseStorageHelper();
+                                helper.SetImage(recipe,context);
+                                list.add(recipe);
+                            }
+                            adapter.setList(list);
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+
+
+    public void GetProducts(final ProductListAdapter adapter) {
+        final LinkedList<Product> list = new LinkedList<>();
+        store.collection("FoodProducts")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Product product = new Product(
+                                            document.getString("id"),
+                                            document.getString("name"),
+                                            null
+                                    );
+                                list.add(product);
+                            }
+                            adapter.SetList(list);
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+
 
     public void  AddUser(UserObject user) {
         SaveData("Users",user);

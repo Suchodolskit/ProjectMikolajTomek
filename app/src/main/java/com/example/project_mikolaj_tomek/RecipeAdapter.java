@@ -57,4 +57,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             summary = itemView.findViewById(R.id.recipe_summary);
         }
     }
+
+    public void addItem(int position, Recipe recipe) {
+        recipeList.add(position, recipe);
+        notifyDataSetChanged();
+    }
+
+    public void setList(List<Recipe> list) {
+        recipeList = list;
+        notifyDataSetChanged();
+    }
 }

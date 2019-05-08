@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import com.example.project_mikolaj_tomek.Models.Product;
 import com.example.project_mikolaj_tomek.Models.Recipe;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity
     private List list;
     private List recipes;
     private RecyclerView recipeView;
+    private RecipeAdapter recipeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,25 +65,23 @@ public class MainActivity extends AppCompatActivity
 
         authHelper = new FirebaseAuthHelper(this);
 
-        FirebaseFirestoreHelper firebaseFirestoreHelper = new FirebaseFirestoreHelper();
+        FirebaseFirestoreHelper firebaseFirestoreHelper = new FirebaseFirestoreHelper(this);
         firebaseFirestoreHelper.FoodProductsInitialise();
         list = firebaseFirestoreHelper.GetCollection("FoodProduct");
 
         recipes = new LinkedList<Recipe>();
-        recipes.add(new Recipe("1", "Test recipe", new Date(), 120, "ASDSADADASDASDADASDSA losowy tekst no moze nie do konca losowy"
-        , "Cos", null, Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888), "Ja"));
-        recipes.add(new Recipe("2", "Test recipe2", new Date(), 120, "ASDSADADASDASDADASDSA losowy tekst no moze nie do konca losowy"
-                , "Cos", null, Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888), "Ja"));
 
         recipeView = findViewById(R.id.recyclerView);
         recipeView.setLayoutManager(new LinearLayoutManager(this));
-        recipeView.setAdapter(new RecipeAdapter(this, recipes));
+        recipeAdapter = new RecipeAdapter(this, recipes);
+        recipeView.setAdapter(recipeAdapter);
 
         FirebaseUser user = authHelper.GetUser();
         if(user == null)
         {
             startActivity(new Intent(this,SignInActivity.class));
         }
+        firebaseFirestoreHelper.GetRecipes(recipeAdapter);
 
     }
     @Override
@@ -146,7 +146,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void AddRecipe(View view) {
-        Intent intent = new Intent(this, AddRecipeActivity.class);
+        //Intent intent = new Intent(this, AddRecipeActivity.class);
+        Intent intent = new Intent(this, ChoseProductsActivity.class);
         startActivity(intent);
     }
 }

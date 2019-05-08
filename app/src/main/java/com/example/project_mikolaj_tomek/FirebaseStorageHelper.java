@@ -1,6 +1,15 @@
 package com.example.project_mikolaj_tomek;
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.widget.ImageView;
+
+
+import com.example.project_mikolaj_tomek.Models.Recipe;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -26,5 +35,19 @@ public class FirebaseStorageHelper {
                 tmpref.putStream(bs);
             }
         }).start();
+    }
+
+    public void SetImage(final Recipe r, final Context context)
+    {
+        StorageReference ref = storageReference.child("images/recipes/"+r.getId()+".png");
+        int TWENTY_MEGABYTES = 1024*1024*20;
+        ref.getBytes(TWENTY_MEGABYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                // Data for "images/island.jpg" is returns, use this as needed
+                Bitmap bmp= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                r.setImage(bmp);
+            }
+        });
     }
 }

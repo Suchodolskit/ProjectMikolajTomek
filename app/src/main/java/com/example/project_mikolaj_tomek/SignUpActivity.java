@@ -100,7 +100,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 
         authHelper = new FirebaseAuthHelper(this);
-        databaseHesper = new FirebaseFirestoreHelper();
+        databaseHesper = new FirebaseFirestoreHelper(this);
     }
     @Override
     protected void onStart() {

@@ -1,5 +1,6 @@
 package com.example.project_mikolaj_tomek;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ public class FirebaseAuthHelper {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private AppCompatActivity activity;
+    private Context context;
 
     public FirebaseAuthHelper(final AppCompatActivity activity) {
         this.mAuth = FirebaseAuth.getInstance();
@@ -29,6 +31,7 @@ public class FirebaseAuthHelper {
             }
         };
         this.activity = activity;
+        this.context=activity;
     }
 
 
@@ -57,7 +60,7 @@ public class FirebaseAuthHelper {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Log.w(TAG, "creation successful");
-                            FirebaseFirestoreHelper helper = new FirebaseFirestoreHelper();
+                            FirebaseFirestoreHelper helper = new FirebaseFirestoreHelper(context);
                             returnUser = new UserObject(user.getUid(),firsName,lastName,phoneNumber,email,null);
                             helper.AddUser(returnUser);
                             activity.finish();

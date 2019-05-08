@@ -10,14 +10,14 @@ public class Recipe extends FirestoreObject {
 
     private String title;
     private Date creationDate;
-    private Integer preparationTime;
+    private long preparationTime;
     private String summary;
     private String description;
     private List<Product> products;
     private Bitmap image;
     private String author;
 
-    public Recipe(String id, String title, Date creationDate, Integer preparationTime, String summary, String description, List<Product> products, Bitmap image, String author) {
+    public Recipe(String id, String title, Date creationDate, long preparationTime, String summary, String description, List<Product> products, Bitmap image, String author) {
         super(id);
         this.title = title;
         this.creationDate = creationDate;
@@ -45,7 +45,7 @@ public class Recipe extends FirestoreObject {
         this.creationDate = creationDate;
     }
 
-    public Integer getPreparationTime() {
+    public long getPreparationTime() {
         return preparationTime;
     }
 
@@ -84,5 +84,13 @@ public class Recipe extends FirestoreObject {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
     }
 }

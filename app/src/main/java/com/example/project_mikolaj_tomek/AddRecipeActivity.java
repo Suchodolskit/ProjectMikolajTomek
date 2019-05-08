@@ -91,7 +91,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 imageBitmap,
                 firebaseAuthHelper.GetUser().getUid());
         FirebaseStorageHelper firebaseStorageHelper = new FirebaseStorageHelper();
-        FirebaseFirestoreHelper firebaseFirestoreHelper = new FirebaseFirestoreHelper();
+        FirebaseFirestoreHelper firebaseFirestoreHelper = new FirebaseFirestoreHelper(this);
         firebaseFirestoreHelper.SaveData("recipes", recipe);
         firebaseStorageHelper.saveRecipeImage(title.getText().toString(),imageBitmap);
         this.finish();
