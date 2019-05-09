@@ -87,13 +87,20 @@ public class AddRecipeActivity extends AppCompatActivity {
                 Integer.parseInt(preparationTime.getText().toString()),
                 summary.getText().toString(),
                 description.getText().toString(),
+                ChoseProductsActivity.retProducts,
                 null,
-                imageBitmap,
                 firebaseAuthHelper.GetUser().getUid());
         FirebaseStorageHelper firebaseStorageHelper = new FirebaseStorageHelper();
         FirebaseFirestoreHelper firebaseFirestoreHelper = new FirebaseFirestoreHelper(this);
         firebaseFirestoreHelper.SaveData("recipes", recipe);
-        firebaseStorageHelper.saveRecipeImage(title.getText().toString(),imageBitmap);
+        if(imageBitmap!=null) {
+            firebaseStorageHelper.saveRecipeImage(title.getText().toString(), imageBitmap);
+        }
         this.finish();
+    }
+
+    public void addProducts(View view) {
+        Intent intent = new Intent(this, ChoseProductsActivity.class);
+        startActivity(intent);
     }
 }

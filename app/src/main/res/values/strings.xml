@@ -30,4 +30,5 @@
     <string name="sign_out_button_text">sign out</string>
     <string name="add_recipe_button_text">Add recipe</string>
     <string name="complete_add_recipe_button_text">Add Recipe</string>
+    <string name="add_products_button_text">Add Products</string>
 </resources>

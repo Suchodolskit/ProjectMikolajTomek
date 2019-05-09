@@ -21,7 +21,7 @@ public class ChoseProductsActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ProductListAdapter mAdapter;
     public static List<Product> retProducts;
-    private List<Product> products;
+    private static List<Product> products;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +41,10 @@ public class ChoseProductsActivity extends AppCompatActivity {
         // Give the RecyclerView a default layout manager.
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-        FirebaseFirestoreHelper helper = new FirebaseFirestoreHelper(this);
-        helper.GetProducts(mAdapter);
+        if(products.size()==0) {
+            FirebaseFirestoreHelper helper = new FirebaseFirestoreHelper(this);
+            helper.GetProducts(mAdapter);
+        }
     }
 
     public void selectCheckBox(View view) {

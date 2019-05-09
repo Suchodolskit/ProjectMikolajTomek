@@ -81,7 +81,7 @@ public class FirebaseFirestoreHelper {
                                         document.getLong("preparationTime"),
                                         document.getString("summary"),
                                         document.getString("description"),
-                                        null,
+                                        (List<Product>)document.get("products"),
                                         null,
                                         document.getString("author")
                                 );
@@ -96,7 +96,6 @@ public class FirebaseFirestoreHelper {
                     }
                 });
     }
-
 
     public void GetProducts(final ProductListAdapter adapter) {
         final LinkedList<Product> list = new LinkedList<>();
@@ -122,6 +121,34 @@ public class FirebaseFirestoreHelper {
                 });
     }
 
+    public void RecipesWithProducts(final List<Recipe> recipes, List<Product> products) {
+            recipes.clear();
+            CollectionReference collectionReference = store.collection("recipes");
+            Query searchRecipesWithProducts = collectionReference.whereEqualTo("products",products);
+            searchRecipesWithProducts.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Recipe recipe = new Recipe(
+                                    document.getString("id"),
+                                    document.getString("title"),
+                                    document.getDate("creationDate"),
+                                    document.getLong("preparationTime"),
+                                    document.getString("summary"),
+                                    document.getString("description"),
+                                    (List<Product>)document.get("products"),
+                                    null,
+                                    document.getString("author")
+                            );
+                            FirebaseStorageHelper helper = new FirebaseStorageHelper();
+                            helper.SetImage(recipe,context);
+                            recipes.add(recipe);
+                        }
+                    }
+                }
+            });
+    }
 
     public void  AddUser(UserObject user) {
         SaveData("Users",user);

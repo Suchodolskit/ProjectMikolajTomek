@@ -146,8 +146,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void AddRecipe(View view) {
-        //Intent intent = new Intent(this, AddRecipeActivity.class);
-        Intent intent = new Intent(this, ChoseProductsActivity.class);
+        Intent intent = new Intent(this, AddRecipeActivity.class);
         startActivity(intent);
+//        FirebaseFirestoreHelper firebaseFirestoreHelper = new FirebaseFirestoreHelper(this);
+//        LinkedList<Product> pr = new LinkedList<>();
+//        pr.add(new Product("11","celery",null));
+//        pr.add(new Product("13","redcurrant",null));
+//        firebaseFirestoreHelper.RecipesWithProducts(new LinkedList<Recipe>(),pr);
     }
 }
