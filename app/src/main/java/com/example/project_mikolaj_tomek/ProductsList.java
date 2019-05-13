@@ -32,9 +32,8 @@ public class ProductsList extends Fragment {
         products = new ArrayList<>();
         products.add(new Product("1", "Aubergine", null, R.drawable.aubergine));
         products.add(new Product("2", "Bacon", null, R.drawable.bacon));
-        ProductAdapter productAdapter = new ProductAdapter(getContext(), products);
-        mProductList.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        mProductList.setAdapter(productAdapter);
+        products.add(new Product("3", "Blueberries", null, R.drawable.blueberries));
+        products.add(new Product("4", "Bread", null, R.drawable.bread));
 
 
     }
@@ -42,8 +41,12 @@ public class ProductsList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mProductList = getView().findViewById(R.id.productsRecyclerView);
-        return inflater.inflate(R.layout.fragment_products_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_products_list, container, false);
+        mProductList = view.findViewById(R.id.productsRecyclerView);
+        ProductAdapter productAdapter = new ProductAdapter(getActivity(), products);
+        mProductList.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        mProductList.setAdapter(productAdapter);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -52,17 +55,17 @@ public class ProductsList extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+//
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
+//    }
 
     @Override
     public void onDetach() {

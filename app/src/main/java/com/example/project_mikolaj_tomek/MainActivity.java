@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
     private void SetupViewPager(ViewPager viewPager)
     {
         FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
-        fragmentAdapter.AddFragment(new RecipeList());
+        fragmentAdapter.AddFragment(new ProductsList());
         viewPager.setAdapter(fragmentAdapter);
     }
     @Override
