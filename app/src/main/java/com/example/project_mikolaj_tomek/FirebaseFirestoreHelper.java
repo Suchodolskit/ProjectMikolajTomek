@@ -97,29 +97,29 @@ public class FirebaseFirestoreHelper {
                 });
     }
 
-    public void GetProducts(final ProductListAdapter adapter) {
-        final LinkedList<Product> list = new LinkedList<>();
-        store.collection("FoodProducts")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Product product = new Product(
-                                            document.getString("id"),
-                                            document.getString("name"),
-                                            null
-                                    );
-                                list.add(product);
-                            }
-                            adapter.SetList(list);
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-                });
-    }
+//    public void GetProducts(final ProductListAdapter adapter) {
+//        final LinkedList<Product> list = new LinkedList<>();
+//        store.collection("FoodProducts")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                    Product product = new Product(
+//                                            document.getString("id"),
+//                                            document.getString("name"),
+//                                            null
+//                                    );
+//                                list.add(product);
+//                            }
+//                            adapter.SetList(list);
+//                        } else {
+//                            Log.w(TAG, "Error getting documents.", task.getException());
+//                        }
+//                    }
+//                });
+//    }
 
     public void RecipesWithProducts(final RecipeAdapter adapter, List<Product> products) {
             final LinkedList<Recipe> list = new LinkedList<>();
@@ -189,21 +189,21 @@ public class FirebaseFirestoreHelper {
 //        }
 
         CollectionReference cr = store.collection("FoodProducts");
-        Query test = cr.whereGreaterThanOrEqualTo("name","peach");
-        test.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful())
-                {
-                    for (QueryDocumentSnapshot document : task.getResult())
-                    {
-                        Map<String,Object> map = document.getData();
-                        Product p = new Product(map.get("id").toString(),map.get("name").toString(),null);
-                        String id = p.getId();
-                    }
-                }
-            }
-        });
+//        Query test = cr.whereGreaterThanOrEqualTo("name","peach");
+//        test.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if(task.isSuccessful())
+//                {
+//                    for (QueryDocumentSnapshot document : task.getResult())
+//                    {
+//                        Map<String,Object> map = document.getData();
+//                        Product p = new Product(map.get("id").toString(),map.get("name").toString(),null);
+//                        String id = p.getId();
+//                    }
+//                }
+//            }
+//        });
 
     }
 }

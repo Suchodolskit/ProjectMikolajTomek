@@ -77,30 +77,30 @@ public class AddRecipeActivity extends AppCompatActivity {
         }
     }
 
-    public void CompleteAddRecipe(View view) {
-
-        FirebaseAuthHelper firebaseAuthHelper = new FirebaseAuthHelper(this);
-
-        Recipe recipe = new Recipe(title.getText().toString(),
-                title.getText().toString(),
-                Calendar.getInstance().getTime(),
-                Integer.parseInt(preparationTime.getText().toString()),
-                summary.getText().toString(),
-                description.getText().toString(),
-                ChoseProductsActivity.retProducts,
-                null,
-                firebaseAuthHelper.GetUser().getUid());
-        FirebaseStorageHelper firebaseStorageHelper = new FirebaseStorageHelper();
-        FirebaseFirestoreHelper firebaseFirestoreHelper = new FirebaseFirestoreHelper(this);
-        firebaseFirestoreHelper.SaveData("recipes", recipe);
-        if(imageBitmap!=null) {
-            firebaseStorageHelper.saveRecipeImage(title.getText().toString(), imageBitmap);
-        }
-        this.finish();
-    }
-
-    public void addProducts(View view) {
-        Intent intent = new Intent(this, ChoseProductsActivity.class);
-        startActivity(intent);
-    }
+//    public void CompleteAddRecipe(View view) {
+//
+//        FirebaseAuthHelper firebaseAuthHelper = new FirebaseAuthHelper(this);
+//
+//        Recipe recipe = new Recipe(title.getText().toString(),
+//                title.getText().toString(),
+//                Calendar.getInstance().getTime(),
+//                Integer.parseInt(preparationTime.getText().toString()),
+//                summary.getText().toString(),
+//                description.getText().toString(),
+//                ChoseProductsActivity.retProducts,
+//                null,
+//                firebaseAuthHelper.GetUser().getUid());
+//        FirebaseStorageHelper firebaseStorageHelper = new FirebaseStorageHelper();
+//        FirebaseFirestoreHelper firebaseFirestoreHelper = new FirebaseFirestoreHelper(this);
+//        firebaseFirestoreHelper.SaveData("recipes", recipe);
+//        if(imageBitmap!=null) {
+//            firebaseStorageHelper.saveRecipeImage(title.getText().toString(), imageBitmap);
+//        }
+//        this.finish();
+//    }
+//
+//    public void addProducts(View view) {
+//        Intent intent = new Intent(this, ChoseProductsActivity.class);
+//        startActivity(intent);
+//    }
 }

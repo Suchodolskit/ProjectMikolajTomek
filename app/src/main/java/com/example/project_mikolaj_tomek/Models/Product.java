@@ -9,16 +9,22 @@ public class Product extends FirestoreObject {
 
     private String name;
     private List<String> BarCodes;
+
+
+
+    private int thumbnail;
     private Image icon;
 
 
-    public Product(String id, String name, Image icon) {
+    public Product(String id, String name, Image icon, int thumbnail) {
         super(id);
         this.name = name;
         this.icon = icon;
+        this.thumbnail = thumbnail;
         BarCodes = new ArrayList<>();
     }
 
+    public int getThumbnail() { return thumbnail; }
     public String getName() {
         return name;
     }

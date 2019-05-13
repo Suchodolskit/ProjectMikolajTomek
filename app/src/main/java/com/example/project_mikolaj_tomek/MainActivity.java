@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView recipeView;
     private RecipeAdapter recipeAdapter;
     private FirebaseFirestoreHelper firebaseFirestoreHelper;
+    private ViewPager mViewPager;
+    private FragmentAdapter fragmentAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +77,10 @@ public class MainActivity extends AppCompatActivity
         firebaseFirestoreHelper.FoodProductsInitialise();
         list = firebaseFirestoreHelper.GetCollection("FoodProduct");
 
-        recipes = new LinkedList<Recipe>();
-
-        recipeView = findViewById(R.id.recyclerView);
-        recipeView.setLayoutManager(new LinearLayoutManager(this));
-        recipeAdapter = new RecipeAdapter(this, recipes);
-        recipeView.setAdapter(recipeAdapter);
+        fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
+        mViewPager = findViewById(R.id.fragment_container);
+        SetupViewPager(mViewPager);
+        mViewPager.setCurrentItem(0);
 
         FirebaseUser user = authHelper.GetUser();
         if(user == null)
@@ -87,6 +88,12 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this,SignInActivity.class));
         }
 
+    }
+    private void SetupViewPager(ViewPager viewPager)
+    {
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
+        fragmentAdapter.AddFragment(new RecipeList());
+        viewPager.setAdapter(fragmentAdapter);
     }
     @Override
     public void onBackPressed() {
@@ -144,31 +151,32 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void SignOut(View view) {
-        authHelper.SignOut();
-        startActivity(new Intent(this, SignInActivity.class));
-    }
 
-    public void AddRecipe(View view) {
-        Intent intent = new Intent(this, AddRecipeActivity.class);
-        startActivity(intent);
-    }
+//    public void SignOut(View view) {
+//        authHelper.SignOut();
+//        startActivity(new Intent(this, SignInActivity.class));
+//    }
+//
+//    public void AddRecipe(View view) {
+//        Intent intent = new Intent(this, AddRecipeActivity.class);
+//        startActivity(intent);
+//    }
+//
+//    public void SearchRecipes(View view) {
+//        Intent intent = new Intent(this,ChoseProductsActivity.class);
+//        startActivityForResult(intent,REQUEST_CODE_SEARCH_PRODUCTS);
+//    }
 
-    public void SearchRecipes(View view) {
-        Intent intent = new Intent(this,ChoseProductsActivity.class);
-        startActivityForResult(intent,REQUEST_CODE_SEARCH_PRODUCTS);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch(requestCode) {
-            case REQUEST_CODE_SEARCH_PRODUCTS:
-                if(resultCode == Activity.RESULT_OK)
-                {
-                    firebaseFirestoreHelper.RecipesWithProducts(recipeAdapter,ChoseProductsActivity.retProducts);
-                }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        switch(requestCode) {
+//            case REQUEST_CODE_SEARCH_PRODUCTS:
+//                if(resultCode == Activity.RESULT_OK)
+//                {
+//                    firebaseFirestoreHelper.RecipesWithProducts(recipeAdapter,ChoseProductsActivity.retProducts);
+//                }
+//        }
+//    }
 
     public void AllRecipes(View view) {
         firebaseFirestoreHelper.GetRecipes(recipeAdapter);
