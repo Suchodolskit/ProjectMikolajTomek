@@ -1,5 +1,6 @@
 package com.example.project_mikolaj_tomek;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.project_mikolaj_tomek.Models.Product;
 import com.example.project_mikolaj_tomek.Models.Recipe;
@@ -30,6 +32,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public final static int REQUEST_CODE_SEARCH_PRODUCTS = 1;
+
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuthHelper authHelper;
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity
     private List recipes;
     private RecyclerView recipeView;
     private RecipeAdapter recipeAdapter;
+    private FirebaseFirestoreHelper firebaseFirestoreHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +70,7 @@ public class MainActivity extends AppCompatActivity
 
         authHelper = new FirebaseAuthHelper(this);
 
-        FirebaseFirestoreHelper firebaseFirestoreHelper = new FirebaseFirestoreHelper(this);
+        firebaseFirestoreHelper = new FirebaseFirestoreHelper(this);
         firebaseFirestoreHelper.FoodProductsInitialise();
         list = firebaseFirestoreHelper.GetCollection("FoodProduct");
 
@@ -81,7 +86,6 @@ public class MainActivity extends AppCompatActivity
         {
             startActivity(new Intent(this,SignInActivity.class));
         }
-        firebaseFirestoreHelper.GetRecipes(recipeAdapter);
 
     }
     @Override
@@ -148,10 +152,25 @@ public class MainActivity extends AppCompatActivity
     public void AddRecipe(View view) {
         Intent intent = new Intent(this, AddRecipeActivity.class);
         startActivity(intent);
-//        FirebaseFirestoreHelper firebaseFirestoreHelper = new FirebaseFirestoreHelper(this);
-//        LinkedList<Product> pr = new LinkedList<>();
-//        pr.add(new Product("11","celery",null));
-//        pr.add(new Product("13","redcurrant",null));
-//        firebaseFirestoreHelper.RecipesWithProducts(new LinkedList<Recipe>(),pr);
+    }
+
+    public void SearchRecipes(View view) {
+        Intent intent = new Intent(this,ChoseProductsActivity.class);
+        startActivityForResult(intent,REQUEST_CODE_SEARCH_PRODUCTS);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode) {
+            case REQUEST_CODE_SEARCH_PRODUCTS:
+                if(resultCode == Activity.RESULT_OK)
+                {
+                    firebaseFirestoreHelper.RecipesWithProducts(recipeAdapter,ChoseProductsActivity.retProducts);
+                }
+        }
+    }
+
+    public void AllRecipes(View view) {
+        firebaseFirestoreHelper.GetRecipes(recipeAdapter);
     }
 }

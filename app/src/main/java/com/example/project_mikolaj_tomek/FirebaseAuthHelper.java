@@ -5,13 +5,17 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.project_mikolaj_tomek.Models.UserObject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.zzu;
 
 public class FirebaseAuthHelper {
     private static final String TAG = "FirebaseAuthHelper";
@@ -42,7 +46,16 @@ public class FirebaseAuthHelper {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(!task.isSuccessful()){
+                            Exception e = task.getException();
                             returnSignInWithEmailResult = false;
+                            if(e.getClass() == FirebaseAuthInvalidUserException.class)
+                            {
+                                Toast.makeText(context, "invalid login or password", Toast.LENGTH_LONG).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(context, "Please try Again", Toast.LENGTH_LONG).show();
+                            }
                         }
                         else{
                             returnSignInWithEmailResult = true;
@@ -69,7 +82,12 @@ public class FirebaseAuthHelper {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             returnUser = null;
-                            //TODO: handle message from firebase and inform user
+                            Exception e = task.getException();
+                            int k =0;
+                            if(e.getClass() == FirebaseAuthWeakPasswordException.class)
+                            {
+                                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                 });

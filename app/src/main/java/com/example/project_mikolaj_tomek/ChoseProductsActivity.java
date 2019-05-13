@@ -1,5 +1,7 @@
 package com.example.project_mikolaj_tomek;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +19,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ChoseProductsActivity extends AppCompatActivity {
-
     private RecyclerView mRecyclerView;
     private ProductListAdapter mAdapter;
     public static List<Product> retProducts;
@@ -69,5 +70,17 @@ public class ChoseProductsActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public void PositiveClose(View view) {
+        Intent resultIntent = new Intent();
+        setResult(Activity.RESULT_OK, resultIntent);
+        finish();
+    }
+
+    public void NegativeClose(View view) {
+        Intent resultIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, resultIntent);
+        finish();
     }
 }

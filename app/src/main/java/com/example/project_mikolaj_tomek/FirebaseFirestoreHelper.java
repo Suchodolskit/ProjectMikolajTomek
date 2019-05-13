@@ -121,8 +121,8 @@ public class FirebaseFirestoreHelper {
                 });
     }
 
-    public void RecipesWithProducts(final List<Recipe> recipes, List<Product> products) {
-            recipes.clear();
+    public void RecipesWithProducts(final RecipeAdapter adapter, List<Product> products) {
+            final LinkedList<Recipe> list = new LinkedList<>();
             CollectionReference collectionReference = store.collection("recipes");
             Query searchRecipesWithProducts = collectionReference.whereEqualTo("products",products);
             searchRecipesWithProducts.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -143,8 +143,9 @@ public class FirebaseFirestoreHelper {
                             );
                             FirebaseStorageHelper helper = new FirebaseStorageHelper();
                             helper.SetImage(recipe,context);
-                            recipes.add(recipe);
+                            list.add(recipe);
                         }
+                        adapter.setList(list);
                     }
                 }
             });
