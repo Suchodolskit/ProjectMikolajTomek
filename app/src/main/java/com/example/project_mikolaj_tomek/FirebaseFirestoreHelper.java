@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -67,27 +69,15 @@ public class FirebaseFirestoreHelper {
 
     public void GetRecipes(final RecipeAdapter adapter) {
         final LinkedList<Recipe> list = new LinkedList<>();
-        store.collection("recipes")
+        store.collection("Recipes")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Recipe recipe = new Recipe(
-                                        document.getString("id"),
-                                        document.getString("title"),
-                                        document.getDate("creationDate"),
-                                        document.getLong("preparationTime"),
-                                        document.getString("summary"),
-                                        document.getString("description"),
-                                        (List<Product>)document.get("products"),
-                                        null,
-                                        document.getString("author")
-                                );
-                                FirebaseStorageHelper helper = new FirebaseStorageHelper();
-                                helper.SetImage(recipe,context);
-                                list.add(recipe);
+                                Object o = document.toObject(Recipe.class);
+                                list.add((Recipe)o);
                             }
                             adapter.setList(list);
                         } else {
@@ -123,24 +113,15 @@ public class FirebaseFirestoreHelper {
 
     public void RecipesWithProducts(final RecipeAdapter adapter, List<Product> products) {
             final LinkedList<Recipe> list = new LinkedList<>();
-            CollectionReference collectionReference = store.collection("recipes");
+            CollectionReference collectionReference = store.collection("Recipes");
             Query searchRecipesWithProducts = collectionReference.whereEqualTo("products",products);
             searchRecipesWithProducts.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            Recipe recipe = new Recipe(
-                                    document.getString("id"),
-                                    document.getString("title"),
-                                    document.getDate("creationDate"),
-                                    document.getLong("preparationTime"),
-                                    document.getString("summary"),
-                                    document.getString("description"),
-                                    (List<Product>)document.get("products"),
-                                    null,
-                                    document.getString("author")
-                            );
+                            Recipe recipe = document.toObject(Recipe.class);
+                            list.add(recipe);
                             FirebaseStorageHelper helper = new FirebaseStorageHelper();
                             helper.SetImage(recipe,context);
                             list.add(recipe);

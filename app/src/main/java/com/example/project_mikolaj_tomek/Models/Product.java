@@ -12,6 +12,7 @@ public class Product extends FirestoreObject {
     private Image icon;
 
 
+    public Product() {}
     public Product(String id, String name, Image icon) {
         super(id);
         this.name = name;

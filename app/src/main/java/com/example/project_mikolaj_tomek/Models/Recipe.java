@@ -17,6 +17,8 @@ public class Recipe extends FirestoreObject {
     private Bitmap image;
     private String author;
 
+    public Recipe(){}
+
     public Recipe(String id, String title, Date creationDate, long preparationTime, String summary, String description, List<Product> products, Bitmap image, String author) {
         super(id);
         this.title = title;

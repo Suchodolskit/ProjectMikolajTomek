@@ -83,7 +83,6 @@ public class FirebaseAuthHelper {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             returnUser = null;
                             Exception e = task.getException();
-                            int k =0;
                             if(e.getClass() == FirebaseAuthWeakPasswordException.class)
                             {
                                 Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
