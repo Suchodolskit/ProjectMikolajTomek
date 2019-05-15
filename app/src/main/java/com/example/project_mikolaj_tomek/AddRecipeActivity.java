@@ -21,7 +21,6 @@ import com.example.project_mikolaj_tomek.Models.Recipe;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-
 public class AddRecipeActivity extends AppCompatActivity {
     public static final int GET_FROM_GALLERY = 1;
     public static final int PICK_USER_PROFILE_IMAGE = 2;

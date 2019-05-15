@@ -52,6 +52,7 @@ public class ProductsList extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_products_list, container, false);
         mProductList = view.findViewById(R.id.productsRecyclerView);
+        mProductList.addItemDecoration(new SpacesItemDecoration(10));
         ProductAdapter productAdapter = new ProductAdapter(getActivity(), products);
         mProductList.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mProductList.setAdapter(productAdapter);
