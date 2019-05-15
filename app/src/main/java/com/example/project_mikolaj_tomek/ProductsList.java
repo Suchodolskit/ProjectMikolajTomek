@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.project_mikolaj_tomek.Models.Product;
+import com.example.project_mikolaj_tomek.Models.ProductCategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +31,18 @@ public class ProductsList extends Fragment {
         super.onCreate(savedInstanceState);
 
         products = new ArrayList<>();
-        products.add(new Product("1", "Aubergine", null, R.drawable.aubergine));
-        products.add(new Product("2", "Bacon", null, R.drawable.bacon));
-        products.add(new Product("3", "Blueberries", null, R.drawable.blueberries));
-        products.add(new Product("4", "Bread", null, R.drawable.bread));
+        products.add(new Product("0", "Apple", ProductCategory.Fruit, R.drawable.apple_1));
+        products.add(new Product("1", "Asparagus", ProductCategory.Vegetable, R.drawable.asparagus));
+        products.add(new Product("2", "Aubergine", ProductCategory.Vegetable, R.drawable.aubergine));
+        products.add(new Product("3", "Avocado", ProductCategory.Vegetable, R.drawable.avocado));
+        products.add(new Product("4", "Bacon", ProductCategory.Meat, R.drawable.bacon));
+        products.add(new Product("5", "Baguette", ProductCategory.Bread, R.drawable.baguette));
+        products.add(new Product("6","Banana",ProductCategory.Fruit,R.drawable.banana));
+        products.add(new Product("7","Beans", ProductCategory.Vegetable, R.drawable.beans));
+        products.add(new Product("8", "Blueberries", ProductCategory.Fruit, R.drawable.blueberries));
+        products.add(new Product("9", "White Bread", ProductCategory.Bread, R.drawable.bread));
+        products.add(new Product("10", "Brown Bread", ProductCategory.Bread, R.drawable.bread_1));
+        products.add(new Product("11", "Brococoli", ProductCategory.Vegetable, R.drawable.broccoli));
 
 
     }

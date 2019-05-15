@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.project_mikolaj_tomek.Models.Product;
 
@@ -38,6 +39,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Product product = productList.get(i);
         productViwHolder.text.setText( product.getName());
         productViwHolder.image.setImageResource(product.getThumbnail());
+        productViwHolder.setItemClickListener((view, position) ->
+        {
+            Toast.makeText(context, product.getName(), Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
@@ -45,16 +50,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return productList.size();
     }
 
-    class ProductViwHolder extends RecyclerView.ViewHolder
+    class ProductViwHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         ImageView image;
         TextView text;
+        private ItemClickListener itemClickListener;
 
         public ProductViwHolder(@NonNull View itemView)
         {
             super(itemView);
+            itemView.setOnClickListener(this);
             image = itemView.findViewById(R.id.product_image);
             text = itemView.findViewById(R.id.product_text);
+        }
+        public void setItemClickListener(ItemClickListener itemClickListener) {
+            this.itemClickListener = itemClickListener;
+        }
+        @Override
+        public void onClick(View v) {
+            itemClickListener.onItemClick(v, getAdapterPosition());
         }
     }
 }

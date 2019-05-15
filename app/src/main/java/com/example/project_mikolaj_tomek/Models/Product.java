@@ -9,17 +9,15 @@ public class Product extends FirestoreObject {
 
     private String name;
     private List<String> BarCodes;
-
-
-
+    private ProductCategory category;
     private int thumbnail;
-    private Image icon;
 
 
-    public Product(String id, String name, Image icon, int thumbnail) {
+
+    public Product(String id, String name, ProductCategory category, int thumbnail) {
         super(id);
         this.name = name;
-        this.icon = icon;
+        this.category = category;
         this.thumbnail = thumbnail;
         BarCodes = new ArrayList<>();
     }
@@ -39,14 +37,6 @@ public class Product extends FirestoreObject {
 
     public void setBarCodes(List<String> barCodes) {
         BarCodes = barCodes;
-    }
-
-    public Image getIcon() {
-        return icon;
-    }
-
-    public void setIcon(Image icon) {
-        this.icon = icon;
     }
 
     public boolean addBarcode(String code)
