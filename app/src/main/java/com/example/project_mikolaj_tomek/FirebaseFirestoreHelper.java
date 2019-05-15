@@ -67,7 +67,7 @@ public class FirebaseFirestoreHelper {
 
     public void GetRecipes(final RecipeAdapter adapter) {
         final LinkedList<Recipe> list = new LinkedList<>();
-        store.collection("recipes")
+        store.collection("Recipes")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
